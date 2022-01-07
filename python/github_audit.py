@@ -220,6 +220,12 @@ def repo_check(github_pat: str, github_repos: list, strict_mode: bool) -> None:
             )
 
 
+#TODO user_audit function to audit the user privileges of each repo
+# 1. Is the user assigned directly?
+# 2. Is the user a collaborator or an org member?
+# 3. List all teams and users on the repo
+
+
 def main(github_pat: str, github_org: str, strict_mode: bool) -> None:
     """
     The main function that triggers and runs the audit functions
@@ -237,10 +243,6 @@ def main(github_pat: str, github_org: str, strict_mode: bool) -> None:
     # Get list of repos
     repo_list = get_org_repos(github_pat, github_org)
     repo_check(github_pat, repo_list, strict_mode)
-    #TODO user_audit function to audit the user privileges of each repo
-    # 1. Is the user assigned directly?
-    # 2. Is the user a collaborator or an org member?
-    # 3. List all teams and users on the repo
     sys.exit()
 
 
