@@ -186,9 +186,11 @@ def repo_check(github_pat: str, github_repos: list, strict_mode: bool) -> None:
             # Check if CI status checks are required
             try:
                 _ = protected_branch.get_required_status_checks()
+                status_checks = True
             except GithubException:
                 logging.warning("%s:%s does not perform mandatory CI/CD checks",
                                 repository, str(default_branch))
+                status_checks = False
             writer.writerow(
                 {
                     "Repository": repository,
@@ -200,7 +202,7 @@ def repo_check(github_pat: str, github_repos: list, strict_mode: bool) -> None:
                     "Approver Count": pr_reviews.required_approving_review_count,
                     "Enforce For Admins": protected_branch.get_admin_enforcement(),
                     "STRICT: Requires Signed Commits": protected_branch.get_required_signatures(),
-                    "STRICT: CI Status Checks Required": protected_branch.get_required_signatures()
+                    "STRICT: CI Status Checks Required": status_checks
                 }
             )
         else:
